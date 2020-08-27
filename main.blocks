@@ -1,0 +1,18 @@
+<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable type="KIND_SpriteKind" id="uGW+uB`oJk(8C=~JKId7">Player</variable><variable type="KIND_SpriteKind" id="(Xn{ZV,GC#ywGR$+?[xe">Projectile</variable><variable type="KIND_SpriteKind" id="~,4=R!wY,5ccKu`d|YH+">Food</variable><variable type="KIND_SpriteKind" id="JjY1{t1jS`)(TDYkXo.k">Enemy</variable><variable id="k7!78IZb|E*myg9@sO`y">mySprite</variable><variable id="$e`M8~~f=EMhWs/hw,#k">spacePlane</variable></variables><block type="pxt-on-start" id="/Z)@EOH(YD!zYW^xYaTh" x="0" y="0"><statement name="HANDLER"><block type="particlesStartScreenAnimation" id="56yVZ9vxfA(a}QNcIv`w"><mutation xmlns="http://www.w3.org/1999/xhtml" _expanded="0" _input_init="false"></mutation><field name="effect">effects.starField</field><next><block type="variables_set" id="y)iF]TJ^2503.?n{]qN|"><field name="VAR" id="$e`M8~~f=EMhWs/hw,#k">spacePlane</field><value name="VALUE"><shadow type="math_number"><field name="NUM">0</field></shadow><block type="spritescreate" id="RVt@g=#sJCKM6`Jr7/t+"><value name="img"><shadow type="screen_image_picker" id="Oj6ces$!fedAf7}p-]tY"><field name="img">img`
+. . . . . . . 4 4 . . . . . . . 
+. . . . . . 4 4 4 4 . . . . . . 
+. . . . . 2 4 4 4 4 2 . . . . . 
+. . . . 2 2 2 2 2 2 2 2 . . . . 
+. . . 2 2 8 2 2 2 2 8 2 2 . . . 
+. . 2 2 2 8 2 2 2 2 8 2 2 2 . . 
+. . 2 2 2 8 2 2 2 2 8 2 2 2 . . 
+. . 2 2 8 8 2 2 2 2 8 8 2 2 . . 
+. . 2 2 2 8 2 2 2 2 8 2 2 2 . . 
+. . 2 2 2 8 2 2 2 2 8 2 2 2 . . 
+. . . 2 2 8 2 2 2 2 8 2 2 . . . 
+. . . 2 2 8 2 2 2 2 8 2 2 . . . 
+. . . 2 2 4 2 2 2 2 4 2 2 . . . 
+. . . 2 2 4 2 2 2 2 4 2 2 . . . 
+. . . 2 4 . 4 2 2 4 . 4 2 . . . 
+. . . 2 . . . 2 2 . . . 2 . . . 
+`</field></shadow></value><value name="kind"><shadow type="spritekind" id="?f1?4:{nd}w*^7P3b0Y*"><field name="MEMBER">Player</field></shadow></value></block></value><next><block type="spritesetsetflag" id="R8w@j_bwo0}gnLPPI4hf"><field name="flag">SpriteFlag.StayInScreen</field><value name="sprite"><block type="variables_get" id="OiQh678UKy|fs6b%`AeA"><field name="VAR" id="$e`M8~~f=EMhWs/hw,#k">spacePlane</field></block></value><value name="on"><shadow type="toggleOnOff" id="mh@oldx)8!vuErKhR~F0"><field name="on">true</field></shadow></value><next><block type="game_control_sprite" id="OwQT4S{YU[^j/b(g30/O"><mutation xmlns="http://www.w3.org/1999/xhtml" _expanded="0" _input_init="false"></mutation><value name="sprite"><shadow type="variables_get" id="DU;0r$ZbpH80TyVJU(J;"><field name="VAR" id="$e`M8~~f=EMhWs/hw,#k">spacePlane</field></shadow></value><next><block type="hudSetLife" id=":-@7NaqF.uIGZI#|@8^v"><value name="value"><shadow type="math_number" id="nQ0US80S|JyR$Y%zeru*"><field name="NUM">3</field></shadow></value></block></next></block></next></block></next></block></next></block></statement></block></xml>
