@@ -1,5 +1,68 @@
+def on_a_pressed():
+    global projectile
+    projectile = sprites.create_projectile_from_sprite(img("""
+            . . . . . . . . 5 . . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . .
+        """),
+        spacePlane,
+        0,
+        -100)
+controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
+
+def on_on_destroyed(sprite):
+    global Rock
+    Rock = sprites.create(img("""
+            . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . b b b b b b . . . . . 
+                    . . . . b c c c c b b b b . . . 
+                    . . . c c b a c c a b a b b . . 
+                    . . . c c a b b b b a b b b . . 
+                    . . c c b b b a b b b a b b . . 
+                    . . c c a c c c a c c c a b . . 
+                    . . c c c b b c a a c c b b . . 
+                    . . c c a c c c c c c c b b . . 
+                    . . . c c a c c c a c c b . . . 
+                    . . . . a c c c a c c . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . .
+        """),
+        SpriteKind.enemy)
+    Rock.set_position(randint(10, 110), randint(10, 20))
+    Rock.set_velocity(0, 50)
+    if info.score()%10 == 0:
+        pass
+sprites.on_destroyed(SpriteKind.enemy, on_on_destroyed)
+
+def on_on_overlap(sprite, otherSprite):
+    Rock.set_position(randint(10, 110), 0)
+    Rock.destroy()
+    projectile.destroy()
+    info.change_score_by(1)
+sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
+
+projectile: Sprite = None
+Rock: Sprite = None
+spacePlane: Sprite = None
 effects.star_field.start_screen_effect()
-mySprite = sprites.create(img("""
+spacePlane = sprites.create(img("""
         . . . . . . . 4 4 . . . . . . . 
             . . . . . . 4 4 4 4 . . . . . . 
             . . . . . 2 4 4 4 4 2 . . . . . 
@@ -18,5 +81,33 @@ mySprite = sprites.create(img("""
             . . . 2 . . . 2 2 . . . 2 . . .
     """),
     SpriteKind.player)
-controller.move_sprite(mySprite)
+spacePlane.set_flag(SpriteFlag.STAY_IN_SCREEN, True)
+controller.move_sprite(spacePlane, 150, 150)
 info.set_life(3)
+Rock = sprites.create(img("""
+        . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . b b b b b b . . . . . 
+            . . . . b c c c c b b b b . . . 
+            . . . c c b a c c a b a b b . . 
+            . . . c c a b b b b a b b b . . 
+            . . c c b b b a b b b a b b . . 
+            . . c c a c c c a c c c a b . . 
+            . . c c c b b c a a c c b b . . 
+            . . c c a c c c c c c c b b . . 
+            . . . c c a c c c a c c b . . . 
+            . . . . a c c c a c c . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
+    """),
+    SpriteKind.enemy)
+Rock.set_velocity(0, 50)
+Rock.set_position(randint(10, 110), randint(10, 20))
+
+def on_forever():
+    if Rock.y >= 120:
+        Rock.destroy()
+        info.change_life_by(-1)
+forever(on_forever)
