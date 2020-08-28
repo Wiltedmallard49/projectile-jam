@@ -21,11 +21,11 @@ def on_a_pressed():
         """),
         spacePlane,
         0,
-        -100)
+        speed)
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
 def on_on_destroyed(sprite):
-    global Rock
+    global Rock, Difficulty, speed
     Rock = sprites.create(img("""
             . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
@@ -46,9 +46,17 @@ def on_on_destroyed(sprite):
         """),
         SpriteKind.enemy)
     Rock.set_position(randint(10, 110), randint(10, 20))
-    Rock.set_velocity(0, 50)
-    if info.score()%10 == 0:
-        pass
+    Rock.set_velocity(0, 50 + Difficulty)
+    if info.score() > 5:
+        if info.score() % 10 == 0:
+            Difficulty += 1
+            if info.life() < 5:
+                info.change_life_by(1)
+        if speed < -150:
+            if info.score() % 50 == 0:
+                speed += -5
+    if info.score() == 150:
+        game.over(True, effects.confetti)
 sprites.on_destroyed(SpriteKind.enemy, on_on_destroyed)
 
 def on_on_overlap(sprite, otherSprite):
@@ -59,6 +67,8 @@ def on_on_overlap(sprite, otherSprite):
 sprites.on_overlap(SpriteKind.projectile, SpriteKind.enemy, on_on_overlap)
 
 projectile: Sprite = None
+speed = 0
+Difficulty = 0
 Rock: Sprite = None
 spacePlane: Sprite = None
 effects.star_field.start_screen_effect()
@@ -82,8 +92,8 @@ spacePlane = sprites.create(img("""
     """),
     SpriteKind.player)
 spacePlane.set_flag(SpriteFlag.STAY_IN_SCREEN, True)
+spacePlane.set_position(80, 100)
 controller.move_sprite(spacePlane, 150, 150)
-info.set_life(3)
 Rock = sprites.create(img("""
         . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -103,8 +113,11 @@ Rock = sprites.create(img("""
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.enemy)
-Rock.set_velocity(0, 50)
+Rock.set_velocity(0, 50 + Difficulty)
 Rock.set_position(randint(10, 110), randint(10, 20))
+Difficulty = 0
+speed = -100
+info.set_life(1)
 
 def on_forever():
     if Rock.y >= 120:
