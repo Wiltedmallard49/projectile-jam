@@ -22,6 +22,7 @@ def on_a_pressed():
         spacePlane,
         0,
         speed)
+    music.pew_pew.play()
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
 def on_on_destroyed(sprite):
@@ -51,16 +52,13 @@ def on_on_destroyed(sprite):
         if info.score() % 10 == 0:
             Difficulty += 1
             if info.life() < 5:
+                music.power_up.play()
                 info.change_life_by(1)
-        if speed < -150:
-            if info.score() % 50 == 0:
-                speed += -5
-    if info.score() == 150:
-        game.over(True, effects.confetti)
+        if info.score() % 50 == 0:
+            speed += -10
 sprites.on_destroyed(SpriteKind.enemy, on_on_destroyed)
 
 def on_on_overlap(sprite, otherSprite):
-    Rock.set_position(randint(10, 110), 0)
     Rock.destroy()
     projectile.destroy()
     info.change_score_by(1)
@@ -118,6 +116,7 @@ Rock.set_position(randint(10, 110), randint(10, 20))
 Difficulty = 0
 speed = -100
 info.set_life(1)
+music.play_melody("E F E G E A E D ", 120)
 
 def on_forever():
     if Rock.y >= 120:
