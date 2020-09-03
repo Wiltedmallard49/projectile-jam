@@ -41,20 +41,17 @@ sprites.onDestroyed(SpriteKind.Enemy, function on_on_destroyed(sprite: Sprite) {
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . .
         `, SpriteKind.Enemy)
+    speed += -1
+    Difficulty += 0.1
     Rock.setPosition(randint(10, 110), randint(10, 20))
-    Rock.setVelocity(0, 50 + Difficulty)
+    Rock.setVelocity(randint(-10, 10), 50 + Difficulty)
     if (info.score() > 5) {
         if (info.score() % 10 == 0) {
-            Difficulty += 1
             if (info.life() < 5) {
                 music.powerUp.play()
                 info.changeLifeBy(1)
             }
             
-        }
-        
-        if (info.score() % 50 == 0) {
-            speed += -10
         }
         
     }
@@ -110,7 +107,7 @@ Rock = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . .
     `, SpriteKind.Enemy)
-Rock.setVelocity(0, 50 + Difficulty)
+Rock.setVelocity(randint(-10, 10), 50 + Difficulty)
 Rock.setPosition(randint(10, 110), randint(10, 20))
 Difficulty = 0
 speed = -100
@@ -118,7 +115,7 @@ info.setLife(1)
 music.playMelody("E F E G E A E D ", 120)
 forever(function on_forever() {
     if (Rock.y >= 120) {
-        Rock.destroy()
+        Rock.setPosition(randint(10, 110), randint(10, 20))
         info.changeLifeBy(-1)
     }
     

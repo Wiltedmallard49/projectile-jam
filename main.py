@@ -26,7 +26,7 @@ def on_a_pressed():
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
 def on_on_destroyed(sprite):
-    global Rock, Difficulty, speed
+    global Rock, speed, Difficulty
     Rock = sprites.create(img("""
             . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
@@ -46,16 +46,15 @@ def on_on_destroyed(sprite):
                     . . . . . . . . . . . . . . . .
         """),
         SpriteKind.enemy)
+    speed += -1
+    Difficulty += 0.1
     Rock.set_position(randint(10, 110), randint(10, 20))
-    Rock.set_velocity(0, 50 + Difficulty)
+    Rock.set_velocity(randint(-10, 10), 50 + Difficulty)
     if info.score() > 5:
         if info.score() % 10 == 0:
-            Difficulty += 1
             if info.life() < 5:
                 music.power_up.play()
                 info.change_life_by(1)
-        if info.score() % 50 == 0:
-            speed += -10
 sprites.on_destroyed(SpriteKind.enemy, on_on_destroyed)
 
 def on_on_overlap(sprite, otherSprite):
@@ -111,7 +110,7 @@ Rock = sprites.create(img("""
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.enemy)
-Rock.set_velocity(0, 50 + Difficulty)
+Rock.set_velocity(randint(-10, 10), 50 + Difficulty)
 Rock.set_position(randint(10, 110), randint(10, 20))
 Difficulty = 0
 speed = -100
@@ -120,6 +119,6 @@ music.play_melody("E F E G E A E D ", 120)
 
 def on_forever():
     if Rock.y >= 120:
-        Rock.destroy()
+        Rock.set_position(randint(10, 110), randint(10, 20))
         info.change_life_by(-1)
 forever(on_forever)
