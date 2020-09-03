@@ -23,6 +23,8 @@ def on_a_pressed():
         0,
         speed)
     music.pew_pew.play()
+    if info.score() > 100:
+        pass
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
 def on_on_destroyed(sprite):

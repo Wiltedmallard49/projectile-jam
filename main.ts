@@ -20,6 +20,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
                     . . . . . . . . . . . . . . . . .
         `, spacePlane, 0, speed)
     music.pewPew.play()
+    if (info.score() > 100) {
+        
+    }
+    
 })
 sprites.onDestroyed(SpriteKind.Enemy, function on_on_destroyed(sprite: Sprite) {
     
